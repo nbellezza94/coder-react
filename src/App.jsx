@@ -1,12 +1,21 @@
-import Navbar from "../src/components/layout/Navbar"
+import { useState } from "react";
+import {Navbar} from "../src/components/layout/Navbar";
+import { ItemList } from "./components/pages/ItemList/ItemList";
 
 function App() {
+
+  const [saludo , setSaludo] = useState("")
+
+  const mostrarSaludo = ()=>{
+    setSaludo("Bienvenido a la tienda")
+  }
+
+
 
   return (
     <div>
       <Navbar />
-      <h1>Hola</h1>
-
+      <ItemList saludo={saludo} mostrarSaludo={mostrarSaludo} />
     </div>
   )
 }
