@@ -7,7 +7,6 @@ export const ItemList = ( {saludo, mostrarSaludo} ) => {
         <div>
             <h2> {saludo} </h2>
             <button onClick={mostrarSaludo}>Mostrar saludo</button>
-
         </div>
     )
 }
