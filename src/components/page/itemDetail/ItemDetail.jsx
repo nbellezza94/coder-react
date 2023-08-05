@@ -1,34 +1,40 @@
 import { useContext, useEffect, useState } from "react";
 import CounterContainer from "../../common/counter/CounterContainer";
-import { products } from "../../../productsMock";
-import { useParams, useNavigate } from "react-router-dom";
+// import { products } from "../../../productsMock";
+import { useParams } from "react-router-dom";
 import { CartContext } from "../../../context/CartContext";
 // import Swal from 'sweetalert2';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { CardMedia } from "@mui/material";
-
+import { db } from "../../../firebaseConfig";
+import { getDoc, collection, doc } from "firebase/firestore"
+import "./ItemDetail.css"
 
 const ItemDetail = () => {
 
   const { addToCart, getQuantityById } = useContext(CartContext)
 
- 
+
 
   const [producto, setProducto] = useState({});
 
   const { id } = useParams()
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
 
   const totalQuantity = getQuantityById(id)
 
 
   useEffect(() => {
-    let productoSeleccionado = products.find((elemento) => elemento.id === +id);
-    const tarea = new Promise((res, rej) => {
-      res(productoSeleccionado)
-    });
-    tarea.then(res => setProducto(res))
+    // let productoSeleccionado = products.find((elemento) => elemento.id === +id);
+    // const tarea = new Promise((res, rej) => {
+    //   res(productoSeleccionado)
+    // });
+    // tarea.then(res => setProducto(res))
+    let productsCollection = collection(db, "products")
+    let productRef = doc(productsCollection, id)
+    getDoc(productRef).then(res => {
+      setProducto({ ...res.data(), id: res.id })
+    })
 
   }, [id]);
 
@@ -61,23 +67,33 @@ const ItemDetail = () => {
   };
 
 
-  return (
-    <div>
-      
-      <h2>{producto.title}</h2>
-      <CardMedia
-      sx={{maxWidth:345}}
-        component="img"
-        alt=""
-        height="auto"
-        image={producto.img}
-      />
-      <h4>{producto.price}</h4>
-
-      <CounterContainer stock={producto.stock} onAdd={onAdd} initial={totalQuantity} />
-      <ToastContainer />
-    </div>
-  );
-};
+    return (
+      <div className="item-detail-container"> {/* Aplicar estilos al contenedor */}
+        <div className="item-detail-box"> {/* Aplicar estilos al recuadro */}
+          <h2>{producto.title}</h2>
+          <img width={"30%"} src={producto.img} alt="" />
+          <h4>${producto.price}</h4>
+  
+          {(typeof totalQuantity === "undefined" || producto.stock > totalQuantity) &&
+            producto.stock > 0 && (
+              <CounterContainer
+                stock={producto.stock}
+                onAdd={onAdd}
+                initial={totalQuantity}
+              />
+            )}
+  
+          {producto.stock === 0 && <h2>No hay stock</h2>}
+  
+          {typeof totalQuantity !== "undefined" &&
+            totalQuantity === producto.stock && (
+              <h2>tenes las maximas cantidades en el carrito</h2>
+            )}
+        </div>
+  
+        <ToastContainer />
+      </div>
+    );
+  };
 
 export default ItemDetail;

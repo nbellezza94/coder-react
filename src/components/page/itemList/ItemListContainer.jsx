@@ -13,27 +13,27 @@ const ItemListContainer = () => {
   useEffect(() => {
     let productsCollection = collection(db, "products");
     let consulta;
-    if(categoryName){
-      consulta = query( productsCollection, where("category", "==", categoryName))
-    }else{
+    if (categoryName) {
+      consulta = query(productsCollection, where("category", "==", categoryName))
+    } else {
       consulta = productsCollection
     }
 
-    getDocs(consulta).then((res)=>{
-      console.log(res.docs)
-      let productos = res.docs.map( doc => {
-        return {...doc.data(), id: doc.id}
-      } )
+    getDocs(consulta).then((res) => {
       
+      let productos = res.docs.map(doc => {
+        return { ...doc.data(), id: doc.id }
+      })
+
       setItems(productos)
     })
-  
+
   }, [categoryName]);
 
   return (
     <>
       <ItemList items={items} />
-   
+
     </>
   );
 };
