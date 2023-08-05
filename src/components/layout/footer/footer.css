@@ -8,9 +8,9 @@
     align-items: center;
     gap: 20px;
     width: 100%;
-    padding: 10px; /* Añade un poco de espacio inferior */
-    background-color: #f5f5f5; /* Agrega un color de fondo si es necesario */
-    z-index: 999; /* Ajusta la capa z-index si es necesario */
+    padding: 10px; 
+    background-color: #ffffff; 
+    z-index: 999; 
   }
 .footer-icons{
     width: 40px;
