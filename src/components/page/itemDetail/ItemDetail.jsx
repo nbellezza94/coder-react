@@ -9,6 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { db } from "../../../firebaseConfig";
 import { getDoc, collection, doc } from "firebase/firestore"
 import "./ItemDetail.css"
+import { Card, CardContent } from "@mui/material";
 
 const ItemDetail = () => {
 
@@ -67,33 +68,38 @@ const ItemDetail = () => {
   };
 
 
-    return (
-      <div className="item-detail-container"> {/* Aplicar estilos al contenedor */}
-        <div className="item-detail-box"> {/* Aplicar estilos al recuadro */}
+  return (
+    <div className="item-detail-container">
+      <Card className="item-detail-box">
+        <CardContent className="card-content">
           <h2>{producto.title}</h2>
-          <img width={"30%"} src={producto.img} alt="" />
+          <img width={"40%"} src={producto.img} alt="" />
           <h4>${producto.price}</h4>
-  
-          {(typeof totalQuantity === "undefined" || producto.stock > totalQuantity) &&
-            producto.stock > 0 && (
-              <CounterContainer
-                stock={producto.stock}
-                onAdd={onAdd}
-                initial={totalQuantity}
-              />
-            )}
-  
-          {producto.stock === 0 && <h2>No hay stock</h2>}
-  
-          {typeof totalQuantity !== "undefined" &&
-            totalQuantity === producto.stock && (
-              <h2>tenes las maximas cantidades en el carrito</h2>
-            )}
-        </div>
-  
-        <ToastContainer />
+        </CardContent>
+      </Card>
+
+      <div className="counter-container">
+        {(typeof totalQuantity === "undefined" || producto.stock > totalQuantity) &&
+          producto.stock > 0 && (
+            <CounterContainer
+              stock={producto.stock}
+              onAdd={onAdd}
+              initial={totalQuantity}
+            />
+          )}
       </div>
-    );
-  };
+
+      {producto.stock === 0 && <h2>No hay stock</h2>}
+
+      {typeof totalQuantity !== "undefined" &&
+        totalQuantity === producto.stock && (
+          <h2>tenes las maximas cantidades en el carrito</h2>
+        )}
+
+      <ToastContainer />
+    </div>
+  );
+};
 
 export default ItemDetail;
+

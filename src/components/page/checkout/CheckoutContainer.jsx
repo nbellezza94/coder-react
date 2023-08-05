@@ -2,7 +2,8 @@ import { useContext, useState } from "react";
 import { CartContext } from "../../../context/CartContext";
 import { db } from "../../../firebaseConfig";
 import { addDoc, collection, serverTimestamp, updateDoc, doc } from "firebase/firestore";
-import { Link } from "react-router-dom";
+import "./CheckoutContainer.css"
+import Swal from "sweetalert2";
 
 const CheckoutContainer = () => {
 
@@ -32,8 +33,8 @@ const CheckoutContainer = () => {
     //modificar stock en firebase
 
     cart.forEach((product) => {
-      updateDoc(doc(db, "products", product.id), 
-      { stock: product.stock - product.quantity, })
+      updateDoc(doc(db, "products", product.id),
+        { stock: product.stock - product.quantity, })
     })
 
   };
@@ -44,17 +45,22 @@ const CheckoutContainer = () => {
 
 
   return (
-    <div>
+    <div className="checkout-container">
       <h1>Checkout</h1>
-
-      {
-        orderId ? (
-          <div>
-            <h2>Gracias por su compra!</h2>
-            <h3>Su numero de compra es:{orderId} </h3>
-            <Link to={"/"}>Seguir comprando</Link>
-          </div>
-        ) : (<form onSubmit={handleSubmit}>
+      {orderId ? (
+        <div>
+          {Swal.fire({
+            title: 'Muchas gracias por su compra!',
+            text: `Su número de pedido es: ${orderId}`,
+            confirmButtonText: 'OK',
+          }).then((result) => {
+            if (result.isConfirmed) {
+              window.location.href = '/';
+            }
+          })};
+        </div>
+      ) : (
+        <form onSubmit={handleSubmit} className="checkout-form">
           <input
             type="text"
             placeholder="Ingrese su nombre"
@@ -75,11 +81,7 @@ const CheckoutContainer = () => {
           />
           <button type="submit">Enviar</button>
         </form>
-
-        )
-      }
-
-
+      )}
     </div>
   );
 };

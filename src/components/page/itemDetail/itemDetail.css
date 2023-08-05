@@ -1,13 +1,25 @@
 .item-detail-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .item-detail-box {
-    border: 10px solid #e80606;
-    padding: 20px;
-    text-align: center;
-    max-width: 50%;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.item-detail-box {
+  width: 40%;
+  margin-bottom: 20px;
+}
+
+.counter-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+.card-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}

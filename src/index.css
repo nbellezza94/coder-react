@@ -3,3 +3,8 @@
   padding: 0;
   box-sizing: border-box;
 }
+@import url('https://fonts.googleapis.com/css2?family=Alumni+Sans:ital@1&family=Source+Serif+4:ital,opsz@1,8..60&display=swap');
+
+body {
+  font-family: 'Alumni Sans', sans-serif;
+}

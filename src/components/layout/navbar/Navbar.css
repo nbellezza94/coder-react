@@ -1,8 +1,8 @@
 .containerNavbar {
-  font-family: 'Alumni Sans', sans-serif;
   font-size: 70px;
   width: 100%;
   height: 10vh;
+  padding: 10px 20px;
   display: flex;
   justify-content: space-between;
   background-color: rgba(128, 128, 128, 0.589);
@@ -11,7 +11,6 @@
 }
 
 .categories {
-  font-family: 'Alumni Sans', sans-serif;
   font-size: 60px;
   display: flex;
   justify-content: space-evenly;
@@ -20,11 +19,18 @@
 }
 
 .categories li {
-  background-color: beige;
   padding: 10px 20px;
   color: #7F669D;
   width: 100px;
   display: flex;
   justify-content: center;
   border-radius: 10px;
+}
+.icon{
+  width: 15%;
+}
+.menu-link{
+  text-decoration: none;
+    color: black;
+    font-size: 3rem;
 }
